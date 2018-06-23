@@ -1,52 +1,52 @@
 {
   "assetsByChunkName": {
     "path---blog-redux-mobx": [
-      "path---blog-redux-mobx-78a64b0bc290d437b87e.js",
-      "path---blog-redux-mobx-78a64b0bc290d437b87e.js.map"
+      "path---blog-redux-mobx-de8eebec133ae7f31479.js",
+      "path---blog-redux-mobx-de8eebec133ae7f31479.js.map"
     ],
     "path---blog-interestinglinks-1": [
-      "path---blog-interestinglinks-1-8f79b4eafae6231a9d46.js",
-      "path---blog-interestinglinks-1-8f79b4eafae6231a9d46.js.map"
+      "path---blog-interestinglinks-1-39fc1daba0812b9e5a47.js",
+      "path---blog-interestinglinks-1-39fc1daba0812b9e5a47.js.map"
     ],
     "path---blog-the-hip": [
-      "path---blog-the-hip-0b55fa731bcf63c77d6f.js",
-      "path---blog-the-hip-0b55fa731bcf63c77d6f.js.map"
+      "path---blog-the-hip-ae7896d9acf4cd9e06e7.js",
+      "path---blog-the-hip-ae7896d9acf4cd9e06e7.js.map"
     ],
     "component---src-pages-index-js": [
       "component---src-pages-index-js-05222a304816a819be01.js",
       "component---src-pages-index-js-05222a304816a819be01.js.map"
     ],
     "path---blog-d-3-in-react": [
-      "path---blog-d-3-in-react-887139337476a98b019a.js",
-      "path---blog-d-3-in-react-887139337476a98b019a.js.map"
+      "path---blog-d-3-in-react-53c5222d557bc67a1a70.js",
+      "path---blog-d-3-in-react-53c5222d557bc67a1a70.js.map"
     ],
     "path---blog-currying-thinking-with-portals": [
-      "path---blog-currying-thinking-with-portals-659f5c6458fb3a1c45fb.js",
-      "path---blog-currying-thinking-with-portals-659f5c6458fb3a1c45fb.js.map"
+      "path---blog-currying-thinking-with-portals-fafa7d36257c92497632.js",
+      "path---blog-currying-thinking-with-portals-fafa7d36257c92497632.js.map"
     ],
     "path---": [
       "path----a80995809b8403e73bc5.js",
       "path----a80995809b8403e73bc5.js.map"
     ],
     "path---blog-the-other-side": [
-      "path---blog-the-other-side-1860977921b26dce669b.js",
-      "path---blog-the-other-side-1860977921b26dce669b.js.map"
+      "path---blog-the-other-side-6217a2f560777d96b2d9.js",
+      "path---blog-the-other-side-6217a2f560777d96b2d9.js.map"
     ],
     "path---blog-coding-on-paper": [
-      "path---blog-coding-on-paper-ccf1054d34344e094de3.js",
-      "path---blog-coding-on-paper-ccf1054d34344e094de3.js.map"
+      "path---blog-coding-on-paper-ed89352d00fe5fc68114.js",
+      "path---blog-coding-on-paper-ed89352d00fe5fc68114.js.map"
     ],
     "component---src-layouts-index-js": [
       "component---src-layouts-index-js-0e6e7990ee8dd50dc3f2.js",
       "component---src-layouts-index-js-0e6e7990ee8dd50dc3f2.js.map"
     ],
     "path---blog-stupid-redux-tricks": [
-      "path---blog-stupid-redux-tricks-759a2be7238596a56e13.js",
-      "path---blog-stupid-redux-tricks-759a2be7238596a56e13.js.map"
+      "path---blog-stupid-redux-tricks-6a85f059e0cdba2cd874.js",
+      "path---blog-stupid-redux-tricks-6a85f059e0cdba2cd874.js.map"
     ],
     "path---blog-why-redux": [
-      "path---blog-why-redux-0dec19182a5496f94220.js",
-      "path---blog-why-redux-0dec19182a5496f94220.js.map"
+      "path---blog-why-redux-a4fd03760e23debd5366.js",
+      "path---blog-why-redux-a4fd03760e23debd5366.js.map"
     ],
     "component---src-templates-blog-template-js": [
       "component---src-templates-blog-template-js-dfeee8041bf721c2f5ea.js",
@@ -57,24 +57,28 @@
       "path---page-2-a0e39f21c11f6a62c5ab.js.map"
     ],
     "path---index": [
-      "path---index-e4cdba8c204fb3e3ca6b.js",
-      "path---index-e4cdba8c204fb3e3ca6b.js.map"
+      "path---index-63250777b5c4e2537ece.js",
+      "path---index-63250777b5c4e2537ece.js.map"
     ],
     "path---blog-git-and-subversion": [
-      "path---blog-git-and-subversion-9f332217437bc1eba902.js",
-      "path---blog-git-and-subversion-9f332217437bc1eba902.js.map"
+      "path---blog-git-and-subversion-a31508d88818ad1c455d.js",
+      "path---blog-git-and-subversion-a31508d88818ad1c455d.js.map"
     ],
     "path---blog-doing-it-right-vs-doing-it-fast": [
-      "path---blog-doing-it-right-vs-doing-it-fast-04b8961e7a3bcbdc7f54.js",
-      "path---blog-doing-it-right-vs-doing-it-fast-04b8961e7a3bcbdc7f54.js.map"
+      "path---blog-doing-it-right-vs-doing-it-fast-07f456f10bb0ebfbfc9c.js",
+      "path---blog-doing-it-right-vs-doing-it-fast-07f456f10bb0ebfbfc9c.js.map"
     ],
     "component---src-pages-404-js": [
       "component---src-pages-404-js-4503918ea3a16cfcdb75.js",
       "component---src-pages-404-js-4503918ea3a16cfcdb75.js.map"
     ],
     "path---blog-react-before-vue": [
-      "path---blog-react-before-vue-bdd2a9ee284f0a522e6e.js",
-      "path---blog-react-before-vue-bdd2a9ee284f0a522e6e.js.map"
+      "path---blog-react-before-vue-7d84d820f549bab823e8.js",
+      "path---blog-react-before-vue-7d84d820f549bab823e8.js.map"
+    ],
+    "path---blog-typescript-i-get-it": [
+      "path---blog-typescript-i-get-it-393f86b95f5fbbf16dba.js",
+      "path---blog-typescript-i-get-it-393f86b95f5fbbf16dba.js.map"
     ],
     "commons": [
       "commons-8dcba3f9452ce054e0e3.js",
@@ -85,58 +89,58 @@
       "path---404-html-a0e39f21c11f6a62c5ab.js.map"
     ],
     "path---blog-private-and-protected": [
-      "path---blog-private-and-protected-90a2c08d9e0cbd6d5f02.js",
-      "path---blog-private-and-protected-90a2c08d9e0cbd6d5f02.js.map"
+      "path---blog-private-and-protected-f465c1e73a55aa84c0d5.js",
+      "path---blog-private-and-protected-f465c1e73a55aa84c0d5.js.map"
     ],
     "component---src-pages-page-2-js": [
       "component---src-pages-page-2-js-1d4f0f19c1c44398ab65.js",
       "component---src-pages-page-2-js-1d4f0f19c1c44398ab65.js.map"
     ],
     "path---blog-c-live-dangerously": [
-      "path---blog-c-live-dangerously-85a5b65ac2d54fc15443.js",
-      "path---blog-c-live-dangerously-85a5b65ac2d54fc15443.js.map"
+      "path---blog-c-live-dangerously-303ff7241a42df80ea0c.js",
+      "path---blog-c-live-dangerously-303ff7241a42df80ea0c.js.map"
     ],
     "path---blog-video-hack-reactor-1": [
-      "path---blog-video-hack-reactor-1-8b34ae49d2625fcc267e.js",
-      "path---blog-video-hack-reactor-1-8b34ae49d2625fcc267e.js.map"
+      "path---blog-video-hack-reactor-1-1eaa58564ea41c872c83.js",
+      "path---blog-video-hack-reactor-1-1eaa58564ea41c872c83.js.map"
     ],
     "app": [
-      "app-a8636c086659369167dc.js",
+      "app-c4f76d6e4cae8f6a822c.js",
       "build-js-styles.css",
-      "app-a8636c086659369167dc.js.map",
+      "app-c4f76d6e4cae8f6a822c.js.map",
       "build-js-styles.css.map"
     ],
     "path---blog-typescript-i-dont-get-it": [
-      "path---blog-typescript-i-dont-get-it-6166ac3f8b8967676fb4.js",
-      "path---blog-typescript-i-dont-get-it-6166ac3f8b8967676fb4.js.map"
+      "path---blog-typescript-i-dont-get-it-f2a2e94ba1fb67c5624d.js",
+      "path---blog-typescript-i-dont-get-it-f2a2e94ba1fb67c5624d.js.map"
     ],
     "path---blog-working-with-dynamic-type": [
-      "path---blog-working-with-dynamic-type-c3c4a86400e50f52b7c0.js",
-      "path---blog-working-with-dynamic-type-c3c4a86400e50f52b7c0.js.map"
+      "path---blog-working-with-dynamic-type-3757cff52b99c84ecc1a.js",
+      "path---blog-working-with-dynamic-type-3757cff52b99c84ecc1a.js.map"
     ],
     "path---404": [
       "path---404-a0e39f21c11f6a62c5ab.js",
       "path---404-a0e39f21c11f6a62c5ab.js.map"
     ],
     "path---blog-react-is-just-a-view": [
-      "path---blog-react-is-just-a-view-871760e724399a2af83a.js",
-      "path---blog-react-is-just-a-view-871760e724399a2af83a.js.map"
+      "path---blog-react-is-just-a-view-9894d9dd8342c7528124.js",
+      "path---blog-react-is-just-a-view-9894d9dd8342c7528124.js.map"
     ],
     "path---blog-random-redux-thoughts": [
-      "path---blog-random-redux-thoughts-fa8258b3aa70ace7e293.js",
-      "path---blog-random-redux-thoughts-fa8258b3aa70ace7e293.js.map"
+      "path---blog-random-redux-thoughts-b093ef55d6a6a9a9f671.js",
+      "path---blog-random-redux-thoughts-b093ef55d6a6a9a9f671.js.map"
     ],
     "path---blog-css-in-js-seperate-concerns": [
-      "path---blog-css-in-js-seperate-concerns-552046c42615378ea2d4.js",
-      "path---blog-css-in-js-seperate-concerns-552046c42615378ea2d4.js.map"
+      "path---blog-css-in-js-seperate-concerns-4d61a97b495d9014ea41.js",
+      "path---blog-css-in-js-seperate-concerns-4d61a97b495d9014ea41.js.map"
     ],
     "path---blog-getters-and-setters-antipattern": [
-      "path---blog-getters-and-setters-antipattern-9b180c36487a395bc3c0.js",
-      "path---blog-getters-and-setters-antipattern-9b180c36487a395bc3c0.js.map"
+      "path---blog-getters-and-setters-antipattern-18b1fe5db119865f09f1.js",
+      "path---blog-getters-and-setters-antipattern-18b1fe5db119865f09f1.js.map"
     ],
     "path---blog-cool-tools": [
-      "path---blog-cool-tools-b206b8dae8afda33936d.js",
-      "path---blog-cool-tools-b206b8dae8afda33936d.js.map"
+      "path---blog-cool-tools-e7f357ba59a5a24e19ad.js",
+      "path---blog-cool-tools-e7f357ba59a5a24e19ad.js.map"
     ]
   }
 }
