@@ -1,10 +1,10 @@
 module.exports = {
-  pathPrefix: '/onPolitics',
+  pathPrefix: '/onCoding',
   siteMetadata: {
-    title: 'Brian Boyko (On Politics)',
+    title: 'Brian Boyko (On Coding)',
     description:
-      'Political blog of Brian Boyko, software engineer and anti-corruption reformer',
-    siteUrl: 'https://brianboyko.github.io/onPolitics/',
+      'Coding blog of Brian Boyko',
+    siteUrl: 'https://brianboyko.github.io/onCoding/',
   },
   plugins: [
     'gatsby-transformer-remark',
