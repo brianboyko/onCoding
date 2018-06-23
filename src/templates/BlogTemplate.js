@@ -1,7 +1,7 @@
 import React from 'react'
 import get from 'lodash/get'
 import Chip from '../ui/Chip'
-import './BlogTemplate.sass';
+import './BlogTemplate.sass'
 
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
