@@ -1,5 +1,5 @@
 ---
-path: "/blog/fox-news-tobin-smith"
+path: "/blog/typescript-i-don't-get-it"
 date: "2017-05-21"
 title: "TypeScript: I don't get it."
 tags: ["typescript"]
