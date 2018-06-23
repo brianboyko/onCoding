@@ -48,8 +48,8 @@ const BlogTemplate = ({ data }) => {
               background: `rgba(0, 0, 0, 0.3)`,
             }}
           >
-            <h1>{frontmatter.title}</h1>
-            <h2>{frontmatter.date}</h2>
+            <h1 className="blog-post__title">{frontmatter.title}</h1>
+            <h2 className="blog-post__date">{frontmatter.date}</h2>
             {Array.isArray(frontmatter.tags) && frontmatter.tags.length ? (
               <Chip>
                 {frontmatter.tags.map((tag, index) => (
