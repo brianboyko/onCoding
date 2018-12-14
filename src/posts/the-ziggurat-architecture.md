@@ -1,10 +1,12 @@
 ---
 path: "/blog/the-ziggurat-architecture"
-date: "2018-06-23"
+date: "2018-12-14"
 title: "The Ziggurat: An easy to understand architecture patten"
 tags: ["react", "architecture", "mvp", "flux", "javascript", "web development"]
 featuredImage: "./img/ziggurat.gif"
 ---
+
+#### draft version
 
 Okay, this is something that I'm not sure if I should be talking about. I don't know if I've finally overcome my impostor syndrome or if I'm heading headlong into Dunning-Krueger.  I'm sure someone like Douglas Crockford or Kyle Simpson has written books on this... but here's what I've figured out so far. 
 
@@ -103,5 +105,38 @@ The next layer up is the controller.  Here is where we have the logic that deals
 
 ### Frontend Level 4: The View - The View in MVC
 
-And here at the end of all things is the view - rendering what the user sees and capturing what the user does.  Like every other layer, it too provides an interface - but this interface is the *user interface.*  
+And here at the end of all things is the view - rendering what the user sees and capturing what the user does.  Like every other layer, it too provides an interface - but this interface is the *user interface.* 
 
+
+## What this has meant in practice. 
+
+For me, what this has meant in practice is that when I build front-end applications, I tend to follow this pattern, whether it's React, Vue, or something else. 
+
+Usually I'll start off with an "ajax" folder which contains a class with all my API data in it.  That API class is imported by...
+
+... the "store" folder, which contains the root state, as well as any actions needed to manipulate it.  The store is accessed by...
+
+... the controllers, which are usually classes with their own methods and state to provide as props to ...
+
+... the containers, which have no methods or state of their own, but render based on the data given to it by the controller, and listen for events that trigger callbacks. 
+
+When that callback is triggered... 
+
+... it provides the event data to a method provided by the controller... 
+
+... which then executes the deployment of an action provided by the store...
+
+... which, when executed, calls the ajax methods...
+
+... which provides data, and returns it to the state...
+
+... when then sends that data back to the controllers...
+
+... and up to the containers...
+
+... so that the user can see it.
+
+
+---
+
+I'm sure there are other ways to organize infrastructure, but this is what I've had success with. 
