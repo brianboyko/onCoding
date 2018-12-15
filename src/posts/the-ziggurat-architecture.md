@@ -1,6 +1,6 @@
 ---
 path: "/blog/the-ziggurat-architecture"
-date: "2018-12-14"
+date: "2018-12-15"
 title: "The Ziggurat: An easy to understand architecture patten"
 tags: ["react", "architecture", "mvp", "flux", "javascript", "web development"]
 featuredImage: "./img/ziggurat.gif"
