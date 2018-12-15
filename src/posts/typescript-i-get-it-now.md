@@ -6,7 +6,7 @@ tags: ["typescript", "best practices"]
 featuredImage: "./img/code.jpg"
 ---
 
-Okay - so here's the deal:
+Okay - so here's the deal: 
 
 About a year ago, I wrote a post on this blog basically saying: "I don't get Typescript." 
 
