@@ -22,121 +22,97 @@ Truth is, it's hard to really understand what makes a *good* software design dif
 
 And the reason this is important is that the higher the cost of paying off your technical debt, the less likely it will actually get paid off.  
 
-To kind of combat this in my own programming, I've come up with a simple model that should be easy to explain and understand.  I mean, it's basically the MVC pattern, but I like to think of it as "The Ziggurat."  It's not the right solution for every problem but if you're trying to build something, I think there are worse models.  
+To kind of combat this in my own programming, I've come up with* a simple model that should be easy to explain and understand.  I call it "The Ziggurat."  It's not the right solution for every problem but if you're trying to build something, I think there are worse models.  
+  
+  (*) Someone else has probably come up with this same model sometime over the last 50 years of computer development, I just haven't run across it yet.  So until I'm informed otherwise, I'll stick with "Ziggurat." Cause ziggurats are cool. 
 
 A ziggurat's basically a pyramid, but with more distinct layers.  And it is that layering that I'd like to talk about now. 
 
 The principals of the ziggurat are as follows: 
 
-* A lower level provides the data the higher state needs, the higher level provides the "actions" (callbacks, really) which ask the lower level to change or use the data somehow. 
-* Use encapsulation. That is, no layer should ever *directly* reassign a value on a lower level.  
-* Wherever possible, avoid side-effects and write in pure functions. Javascript is not a purely functional language, but pure functions are easier to test and to understand.  
-* Ensure that the application fails *up*, not down. That is, a break or bug in a lower layer can (and probably should) affect higher levels of the ziggurat, but a bug in a higher level should never cause problems with the lower level, such as corrupting state or disabling methods. 
+* The program is made of distinct layers.  
+* Each layer has an **interface** that can be accessed by the layer above it. In turn, each layer accesses the interface of the layer below it.  
+* A lower layer provides getter-only access to it's state via interface to it's upper neighbor alone. If the upper layer needs to *change* a state, the lower layer should *provide* a setter method (a callback) to that state, and the logic of the setter *lives* in the lower layer.  I.e., you should never be able to *directly* modify the state of any layer from any layer above it.
+* Similarly, a lower layer should be completely blind to the state of the layers above it.  It only interacts with the above layer when the above layer calls one of it's provided methods. 
+* Wherever possible, avoid side-effects and write in pure functions.  Where *not* possible, make sure that side effects *ONLY* affect the current layer, not other layers.  (One exception: During development, use console.log and console.error wherever you need to). 
+* A lower layer can provide an interface to *many different instances* of upper layers. For example, in React/Redux, the Redux store provides the interface for many different React containers.  Still, each react container uses the same interface (or at least parts of the same interface) to access the Redux store. 
+* It is *discouraged*, but *not forbidden* to write an upper layer that requires more than one instance of a lower layer. For example, if you have one lower layer that provides the price in USD of a product, and another lower layer that provides the current conversion rates from USD to GBP, if you want to display the price of a product in GBP, you need access to both those data points. That's a reasonable use of getting data from two different lower layer instances - but (and this is a huge "but"), every time you do this, you increase the amount of places you have to look when an application fails.  Therefore if you can make it so each upper layer requires *one and only one* instance of a lower layer, do so. 
 
-I've seen MVC patterns described as "MVVM", "MVP", MV* - the truth is, the real key isn't following a specific set of patterns you find in a book, but just using your common sense to make sure that each layer can be switched out with another and the rest of the code doesn't need to be touched.  
+### So what happens when you follow these guidelines? 
 
-So here are the advantages to this pattern:
+#### Reduce mean time to repair
 
-* If you had to switch out an entire layer for something else, you could do so without refactoring the upper layer or the lower layer, simply by rewriting interfaces between the two.  
-* You can more easily find out the root causes of bugs, because only the layer that contains the bug and the layers above it will be affected, so you'll know exactly where to start looking.  
-* You'll be able to have multiple developers working on different parts of the project without stepping on each other's toes, so long as the interfaces don't change. 
-* You'll be able to build faster during prototyping by mocking out the logic of the layers below a certain point.  
+First, you'll find that when your application fails due to a bug, it will fail *up*, not *down*.  A bug or error in a lower level can mess up the layers *above* it, but the layers *below* it should still be working perfectly.  This helps you to *isolate* the bugs faster, figure out *where the root cause is*, and come up with a solution, rather than having to examine your whole application, looking for the bug. 
 
-Now, I've mostly worked with React/Redux and Vue, so I'll explain it in terms of a front-end web-based framework, but I think any application - anything from pure-server-side code to video games - can make use of the Ziggurat. 
+#### Avoid shotgun surgery
 
-But first, let's start with something more basic - [the OSI model](https://www.webopedia.com/quick_ref/OSI_Layers.asp). 
+Because each layer is independent and provides the interface above it, if you need to change something or add a new feature, you typically *won't* have to engage in "shotgun surgery" - using find/replace to find out where the old method was accessed and patch each instance throughout the application.  *Instead*, while you may need to write code to take advantage of the new capabilities from the changed interface - you'll only need to change the interface in a *linear fashion* - following the layers up. 
 
-The OSI model is used a lot in networking to describe different layers of how to get a packet of data to point A to point B. At the very lowest level is the physical hardware that runs on physical iron and travels on physical wires (or physical radio waves, as the case may be). It too follows this model, with transmission of data passing through each of the lower layers, and reception of data passing back through those layers. You don't really need to know much of this, save that we're going to start *our* ziggurat, where the OSI model ends: Layer 7, the application. 
+#### Easier Team Development
 
-And the application layer begins at deployment.  Are you going to be hosting this on localhost? On AWS? Digital Ocean? Heroku? Will you use containerization like Docker? Or run functions-as-a-service? In any case - that's the base of what we're going to build on.  So what do we want? 
-## On the backend
+If you have a larger application, and a team working on the application, this allows for easier team development - as each developer can, essentially, work in isolation on their one layer, provided that other developers know what the interface of the lower layer will provide, and what it needs to provide to the upper layer.  In that way, even while a lower layer is "still in development," other engineers can start working on the upper layers by mocking out the lower level's interface.  
 
-### Backend Level 0: The Language Runtime & Database
+#### Easier testing
 
-At the bottom level, we're talking about the service which we're planning to use. And we're going to be following this Ziggurat pattern all the way down. If your language is JS, you're probably talking about Node as your environment, but you can also think of JVM, Python and Ruby as providing similar features. At any rate, whatever language you use, it *reads and gets methods from the environment it lives on* and provides a standard interface that you, as a software developer, can use to access the power of the environment it lives on. But unless you're specifically dealing with system level programming - writing drivers and such - it *never alters the environment it lives on*. 
+Following on the same vein, while it is important to do integration testing, the value of having each layer being independently testable - that is, being able to mock the lower layers in test environments - allows you to create more self-contained tests.  
 
-Node, for example, grants access to the computer's filesystem by use of the "fs" library, and accesses the network via the "net", "http" "http/2" and "https" libraries. Even [node's "os" library](https://nodejs.org/dist/latest-v11.x/docs/api/os.html) is geared towards accessing the data provided by the OS - with only one method, "setPriority" which can be considered perhaps an alteration to that environment. And though I don't know for certain, I'm reasonably convident that setPriority() only accesses methods provided to Node by the environment. 
+#### Easier refactoring / Easier Scaling / Reduce the cost of paying off technical debt.
 
-### Backend Level 1: Database Direct Manipulation - The Model in MVC
+If you had to switch out an entire layer for something else, you could do so without refactoring the upper layer or the lower layer, simply by rewriting interfaces between the two.  This means that when a better solution becomes available, or you need to switch out technologies as you scale up, you don't have to rewrite your entire application to take advantage of it.  This is *especially* true in early 2019, when people are starting to rewrite methods in lower level languages to take advantage of the speed gains of WASM - you'll still write your first version in Javascript, later, when your code is pretty stable, you'll re-write it in C++ or Rust and get a performance boost - yet still not have to worry about the rest of your application. 
 
-Once we get a runtime up, what's the first level we should think about?  Well, we're probably going to need to access some sort of datastore - usually a database.  While there are usually libraries for each combination of runtimes, environments, and databases so that you can easily access the database from your application, the first code you really have to think about writing lives here in level one: Database manipulation.  For most applications, you're going to be dealing with writing and reading from a persistant datastore - i.e., the database. What methods do you need to write to change that data?  
+#### Less Frustration
 
-The first thing you need to do is define the schema of your database.  That is - come up with a model of how you want the data to be presented and provide the methods for creating that model (migration) and accessing that model (CRUD).   
+Let's be honest - *any* organization in the code is better than a big ball of mud to work on.  By taking your large project and breaking it down into smaller layers, you essentially limit the amount of stuff you have to keep in your head at one time, and reduce the number of tabs you have open to track down bugs.  
 
-Now, it's true that you may not know *exactly* what you need until you start developing it.  Or something might change and you may need a new table or reorganize how you link your primary keys, or something like that.  That's *fine*.  These levels are not *the order in which you develop the application.*  They're just, as you develop the application, where each bit of information lives.  In this layer, we're only dealing with the most basic functions needed to access the database in the most basic terms.  They can be changed.  
+### In Practice
 
-### Backend Level 2: Database Interface methods - The Controller in MVC
-
-For some apps, CRUD is all you need, but for most, there will be some added complexity.  This is *especially* true of applications that have complicated one-to-many or many-to-many relationships, or where data lookups aren't always straightforward.  That layer is here.  Whereas the lower CRUD layer might read a single entry, the methods you provide here will *use* the methods provided in the lower layer (the CRUD layer) and chain them together to create more specific queries. So for example, if you're running Amazon, to get the data for a product might be CRUD level.  To find out "people who bought this also bought...", that kind of complex method, which probably deals with multiple records over multiple tables will likely live in this level.  
-
-There are cases where you might need to write a complex query out in raw SQL or something and access the database directly for speed if a query is so common that it doesn't make sense to wait for tons of callbacks to resolve.  Despite the complexity, since it directly accesses the database, it belongs in the lower level... here's the reason.
-
-If you follow this pattern, if you, for some reason, decided to switch databases entirely - say you were moving from MySQL to Postgres, or you wanted to get out from under Microsoft or Oracle's thumb - *so long as you provided the same interface to the lower level 1 to level 2*, you could do so without disrupting the rest of the application.  Everything would still work as expected, and you wouldn't need to rewrite any code *other* than the code that lives on Level 1. Your server (level 3) will still access the same methods that you provide at this level, and because of that, *when technological advancement comes along*, or *when you think of a better way to do things*, you're not trapped into rewriting your entire application to take advantage of it.  
-
-### Backend Level 3: The API - The View in MVC
-
-Now, in a web application the server level is quite literal, but what we're really talking about more broadly is the way that you provide access to the methods you've provided in the previous level to the levels above in a very safe and defined manner.  That is - you want to limit the amount of access to exactly what the front-end of your application (whether that's a browser, or some sort of video game rendering engine) needs.  That's where the API comes in - whether REST or SOAP, the API gets the data from the methods provided by the Database Interface Methods. 
-
-This API provides the data in the format the consumer (the browser) wants it in, making it effectively "the view" for your browser (if not for your end user). Again, see how things are encapsulated.  We access the controller's methods to get data, and provide endpoints which our browser can access.  If you wanted to switch from, Express to Koa, you could easily do so, provided you keep the same endpoints to the upper levels and the same method calls to the lower levels. 
-
-So that's our backend. This is actually pretty standard stuff, nothing really all that different than conventional wisdom.  Heck, on the backend, this "ziggurat" pattern looks exactly like MVC.  What gives?  What's so important about it?  
-
-Well, the key to this is that you can continue thinking in this way when you start designing code on the front end.  
-
-## On the Frontend
-
-### Frontend Level 1: The API Access
-
-The counterpart to the API is the API access.  We need to write methods to access the methods and information the API provides - that access should be in it's own seperate library, with the idea being that all it does is send requests and recieves responses.  In many ways, the API access in your frontend application is just a way to continue encaspulation of the API to the rest of your application.  
-
-This API access provides to the layer above it methods to get data, and by it's very nature, uses HTTP to gain access to the exposed parts of the backend API. And yes, once again - you can replace your entire API library (from Axios to Superagent or Fetch, for example) and still only have to rewrite this one portion of the code.  
-
-### Frontend Level 2: The State Manager - The Model in MVC
-
-In most applications, it's not enough to access the API, but to store the data that you get back from the API somewhere.  There are also cases in which there may be more "local" data which needs to be retained (User preferences, history lists, JWT tokens, or even things like username) that we might need to send to the API, but don't necessarily need to be stored in the database.  For that, you use a state manager.  And there are tons of options - Redux is the one that comes to mind, but even if you just use a React component state as a sort of "event bus", it will work.  
-
-This state manager takes care of the state of the application, storing the data and providing that data to the level above. And here we also provide our interfaces - in Redux, Vuex, and the Flux pattern, these interfaces are called actions - and the upper level never manipulates the state directly - only through those actions that the interface provides.  
-
-The state manager too, should provide the only access to the API.  Ideally, the API provides an action to the upper levels. While the action *call* is executed at the upper levels, the action itself lives on this level.  Now, when that action gets called, *inside that action* is a *call* that has been provided by the API to the state manager, which will return the data, which changes the state in the state manager, which changes the data sent upwards to the next level, the containers. 
-
-### Frontend Level 3: The Container - The Controller in MVC
-
-The next layer up is the controller.  Here is where we have the logic that deals with user-created events.  All our handlers for what happens when the user does X should live here in the containers layer.  And here we follow the same pattern. Actions and data are provided by the state manager - and we provide methods to our view that should kick off when the view captures an user event. 
-
-### Frontend Level 4: The View - The View in MVC
-
-And here at the end of all things is the view - rendering what the user sees and capturing what the user does.  Like every other layer, it too provides an interface - but this interface is the *user interface.* 
-
-
-## What this has meant in practice. 
+Now, I've mostly worked with the NodeJS stack, so I'll explain it in terms of a web application, but I think any application - anything from pure-server-side enterprise code to video games - can make use of the Ziggurat. 
 
 For me, what this has meant in practice is that when I build front-end applications, I tend to follow this pattern, whether it's React, Vue, or something else. 
 
-Usually I'll start off with an "ajax" folder which contains a class with all my API data in it.  That API class is imported by...
+```
+    ajax-layer provides data to --> 
+      store provides data to --> 
+        container provides data to --> 
+          component uses the data to render the --> 
+            view watches for --> 
+              events triggers methods on -->
+            view runs a method from the --> 
+          component then runs the appropriate callback from the -->
+        container which dispatches an action provided by the -->
+      store which makes a call to the asynchronous methods of the -->
+    ajax-layer when then gets new data to provide to the --> 
+      store which provides data to... you get the idea. 
+```
 
-... the "store" folder, which contains the root state, as well as any actions needed to manipulate it.  The store is accessed by...
+Now this is slightly different from a traditional "flux" pattern which likes to skip the middleman a lot.  And there's nothing wrong with that.  
 
-... the controllers, which are usually classes with their own methods and state to provide as props to ...
+In flux, you're more likely to see:
 
-... the containers, which have no methods or state of their own, but render based on the data given to it by the controller, and listen for events that trigger callbacks. 
+```
+    ajax-layer provides data to --> 
+      store provides data to --> 
+        container provides data to --> 
+          component uses the data to render the --> 
+            view watches for --> 
+              events triggers methods directly provided by the -->
+      store which makes a call to the asynchronous methods of the -->
+    ajax-layer when then gets new data to provide to the --> 
+      store provides data to --> 
+        container provides data to --> 
+          component uses the data to render the --> 
+            view watches for --> 
+              events triggers methods directly provided by the -->
+```
 
-When that callback is triggered... 
+So why write programs in this way?  Why not just "map state to props/map dispatch to props" and let the view access the store directly if we use the flux pattern of "data up, actions deep down?"  Well the problem comes in when we need to change the interface of the store (maybe for new functionality, maybe just because there's an embarassing typo in a method call). In any case, if the interface of the store changes significantly, we now have to make sure that *every* container, component, and view is rewritten to handle the new store interface. 
 
-... it provides the event data to a method provided by the controller... 
+On the other hand, with a ziggurat pattern, we only have to make sure the container is rewritten to take into consideration the new store interface.  Now - granted, for some changes, that means that the container's interface will have to change as well, and that may necessitate a change in components... and you may indeed end up having to rewrite the code at the view layer anyway - but *not every time*, and *not for every instance of every layer*.  
 
-... which then executes the deployment of an action provided by the store...
+Additionally, writing in the flux pattern makes it difficult to test the view independently of the store (and every intervening layer).  To test a stateless component in Flux, you not only have to mock the container, but also the store and all the actions it provides.  Keep in mind, even if you're just using the container to make a "pass-through" method all the way down through to the store, it still provides an 'escape hatch' for mocking just one component. It also allows you, during debugging, to place breakpoints and console.logs to determine where in your application things are going wrong. 
 
-... which, when executed, calls the ajax methods...
-
-... which provides data, and returns it to the state...
-
-... when then sends that data back to the controllers...
-
-... and up to the containers...
-
-... so that the user can see it.
-
+As always, YMMV. This is just a pattern that has worked for me.  
 
 ---
 
-I'm sure there are other ways to organize infrastructure, but this is what I've had success with. 
+This blog post is a draft. I hope to revise it when I get some more expertise and feedback from the community.  
